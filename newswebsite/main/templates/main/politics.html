@@ -1,0 +1,28 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block title %} Політика {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/politics.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <div class="news-container">
+        {% if news %}
+            {% for n in news %}
+                <a href="{% url 'news_template' n.id %}" class="news-link">
+                    <div class="news-item">
+                        {% if n.image %}
+                            <img src="{{ n.image.url }}" alt="{{ n.title }}" class="news-image">
+                        {% endif %}
+                        <h2>{{ n.title }}</h2>
+                        <p>{{ n.description }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <p>Наразі новин немає</p>
+        {% endif %}
+    </div>
+{% endblock %}

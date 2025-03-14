@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Головна сторінка {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1>Новини</h1>
+    {% if user.is_authenticated %}
+        <p class="welcome-text">Вітаємо, {{ user.username }}!</p>
+        <a href="{% url 'logout' %}" class="logout-button">Вихід</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="login-button">Вхід</a>
+        <a href="{% url 'register' %}" class="register-button">Реєстрація</a>
+    {% endif %}
+
+    </header>
+    <nav class="navbar">
+        <a href="{% url 'main' %}">Головна</a>
+        <a href="{% url 'politics' %}">Політика</a>
+        <a href="#">Технології та Наука</a>
+        <a href="#">Валюта</a>
+        <a href="#">Кіно та Культура</a>
+    </nav>
+
+    {% block content %}
+    <div class="container">
+        {% if news %}
+            {% for n in news %}
+                <div class="news-item">
+                    <h2>{{ n.title }}</h2>
+                    <p>{{ n.description }}</p>
+                    {% for ph in photo %}
+                        <img src="{{ ph.image.url }}" alt="{{ n.title }}" class="photo">
+                    {% endfor %}
+                    <div class="category">
+                        {% for cat in category %}
+                            <span>{{ cat.name_category }}</span>{% if not loop.last %} {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1>Наразі новин немає</h1>
+        {% endif %}
+    </div>
+    {% endblock %}
+    <footer>
+        <p>&copy; 2025 Новинний сайт</p>
+    </footer>
+</body>
+</html>

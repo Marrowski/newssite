@@ -1,0 +1,40 @@
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<body></body>
+    <div class="registration-form">
+        <h2>Реєстрація у мережі</h2>
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <label for="username">Ім'я користувача:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="first_name">Ім'я:</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="last_name">Прізвище:</label>
+            <input type="text" id="last_name" name="last_name">
+
+            <label for="email">Електронна пошта:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password1">Пароль:</label>
+            <input type="password" id="password1" name="password1" required>
+
+            <label for="password2">Підтвердження пароля:</label>
+            <input type="password" id="password2" name="password2" required>
+
+            <button type="submit" class="submit-button">Зареєструватися</button>
+        </form>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'main/index.html' %}
+{% load static %}
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/template_news.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="news-detail-container">
+    <h2>{{ news.title }}</h2>
+    {% if news.image %}
+        <img src="{{ news.image.url }}" alt="{{ news.title }}" class="news-image">
+    {% endif %}
+    <p>{{ news.description }}</p>
+    <a href="{% url 'politics' %}" class="back-link">Назад до новин</a>
+
+    <div class="comments-section">
+        <h3>Коментарі</h3>
+        {% for com in comments %}
+            <div class="comment">
+                <p><strong>{{ com.user }}:</strong> {{ com.comment }}</p>
+            </div>
+        {% empty %}
+            <p>Немає коментарів.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

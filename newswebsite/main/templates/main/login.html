@@ -1,0 +1,23 @@
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <h1>Увійти</h1>
+    <form action="#" method="POST">
+        {% csrf_token %}
+        <label for="username">Ім`я користувача:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Увійти</button>
+
+    </form>
+    <p>Не зареєстровані? <a href="{% url 'register' %}">Створіть обліковий запис</a></p>
+</div>
+{% endblock %}
