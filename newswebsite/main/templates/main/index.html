@@ -11,15 +11,30 @@
 <body>
     <header>
         <h1>Новини</h1>
-    {% if user.is_authenticated %}
-        <p class="welcome-text">Вітаємо, {{ user.username }}!</p>
-        <a href="{% url 'logout' %}" class="logout-button">Вихід</a>
-    {% else %}
-        <a href="{% url 'login' %}" class="login-button">Вхід</a>
-        <a href="{% url 'register' %}" class="register-button">Реєстрація</a>
-    {% endif %}
-
+        {% if user.is_authenticated %}
+            <p class="welcome-text">Вітаємо, {{ user.username }}!</p>
+            <a href="{% url 'logout' %}" class="logout-button">Вихід</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="login-button">Вхід</a>
+            <a href="{% url 'register' %}" class="register-button">Реєстрація</a>
+        {% endif %}
     </header>
+
+    <div class="losses-banner">
+        <p>Втрати РФ у війні проти України:</p>
+        <ul>
+            <li>Особовий склад: {{ units }}</li>
+            <li>Танки: {{ tanks }}</li>
+            <li>Броньовані машини: {{ arm_veh }}</li>
+            <li>Артилерійські системи: {{ artillery }}</li>
+            <li>РСЗВ: {{ mlrs }}</li>
+            <li>Літаки: {{ planes }}</li>
+            <li>Гелікоптери: {{ helicopters }}</li>
+            <li>Паливні танки: {{ fuel_tanks }}</li>
+            <li>Військові кораблі: {{ warships }}</li>
+        </ul>
+    </div>
+
     <nav class="navbar">
         <a href="{% url 'main' %}">Головна</a>
         <a href="{% url 'politics' %}">Політика</a>
@@ -28,28 +43,47 @@
         <a href="#">Кіно та Культура</a>
     </nav>
 
-    {% block content %}
-    <div class="container">
-        {% if news %}
-            {% for n in news %}
-                <div class="news-item">
-                    <h2>{{ n.title }}</h2>
-                    <p>{{ n.description }}</p>
-                    {% for ph in photo %}
-                        <img src="{{ ph.image.url }}" alt="{{ n.title }}" class="photo">
+    <div class="main-content">
+        <aside class="trending-news">
+            <h2>ОСТАННІ НОВИНИ</h2>
+            <ul>
+                {% for trending in trend %}
+                    <li>
+                        <span class="time">{{ trending.news.date_of_publish|date:"d.m.Y H:i" }}</span>
+                        <a href="{% url 'news_template' trending.news.id %}" title="{{ trending.news.title }}">
+                            {{ trending.news.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+        <div class="news-container">
+            {% block content %}
+            <div class="container">
+                {% if news %}
+                    {% for n in news %}
+                        <div class="news-item">
+                            <h2>{{ n.title }}</h2>
+                            <p>{{ n.description }}</p>
+                            {% for ph in photo %}
+                                <img src="{{ ph.image.url }}" alt="{{ n.title }}" class="photo">
+                            {% endfor %}
+                            <div class="category">
+                                {% for cat in category %}
+                                    <span>{{ cat.name_category }}</span>{% if not loop.last %} {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
                     {% endfor %}
-                    <div class="category">
-                        {% for cat in category %}
-                            <span>{{ cat.name_category }}</span>{% if not loop.last %} {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <h1>Наразі новин немає</h1>
-        {% endif %}
+                {% else %}
+                    <h1>Наразі новин немає</h1>
+                {% endif %}
+            </div>
+            {% endblock %}
+        </div>
     </div>
-    {% endblock %}
+
     <footer>
         <p>&copy; 2025 Новинний сайт</p>
     </footer>

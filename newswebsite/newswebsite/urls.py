@@ -12,7 +12,7 @@ urlpatterns = [
     path('news/<int:news_id>/', news_template, name='news_template'),
     path('login/', login_view, name='login'),
     path('register/', register, name='register'),
-    path('logout/', logout_view, name='logout')
+    path('logout/', logout_view, name='logout'),
     ]
 
 if settings.DEBUG:

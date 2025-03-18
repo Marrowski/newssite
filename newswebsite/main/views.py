@@ -5,18 +5,59 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.utils.translation import gettext as _
+import requests
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def main_view(request):
     category_list = Category.objects.all()
     news_list = News.objects.all()
     images = Photo.objects.all()
+    trending_news = TrendingNews.objects.select_related('news').order_by('-news__date_of_publish')[:5]
+
+    
+    url = os.getenv('url')
+    response = requests.get(url)
+    
+    
+    if response.status_code == 200:
+        data_main = response.json()
+        
+        data = data_main['data']['stats']
+        
+        units = data['personnel_units']
+        tanks = data['tanks']
+        armoured_vehicles = data['armoured_fighting_vehicles']
+        artillery = data['artillery_systems']
+        mlrs = data['mlrs']
+        planes = data['planes']
+        helicopters = data['helicopters']
+        fuel_tanks = data['vehicles_fuel_tanks']
+        warships = data['warships_cutters']
+        
+    else:
+        return f'Помилка доступу до серверу. Код: {response.status_code}'
     
     context = {
         "category": category_list,
         "news": news_list,
         "photo": images,
-        'user': request.user
+        'user': request.user,
+        'trend': trending_news,
+        
+        'units': units,
+        'tanks': tanks,
+        'arm_veh': armoured_vehicles,
+        'artillery': artillery,
+        'mlrs': mlrs,
+        'planes': planes,
+        'helicopters': helicopters,
+        'fuel_tanks': fuel_tanks,
+        'warships': warships
     }
     
     return render(request, 'main/index.html', context)
@@ -111,5 +152,6 @@ def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('login')
-    
+
+
     
