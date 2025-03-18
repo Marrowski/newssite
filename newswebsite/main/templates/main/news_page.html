@@ -17,13 +17,23 @@
 
     <div class="comments-section">
         <h3>Коментарі</h3>
-        {% for com in comments %}
+        {% for com in text_comm %}
             <div class="comment">
                 <p><strong>{{ com.user }}:</strong> {{ com.comment }}</p>
             </div>
         {% empty %}
             <p>Немає коментарів.</p>
         {% endfor %}
+
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'add_comment' news.id %}" class="comment-form">
+                {% csrf_token %}
+                <textarea name="comment" placeholder="Напишіть ваш коментар..." required></textarea>
+                <button type="submit">Додати коментар</button>
+            </form>
+        {% else %}
+            <p>Щоб залишити коментар, <a href="{% url 'login' %}">увійдіть</a> або <a href="{% url 'register' %}">зареєструйтеся</a>.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

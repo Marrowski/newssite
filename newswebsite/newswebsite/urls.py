@@ -13,6 +13,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('register/', register, name='register'),
     path('logout/', logout_view, name='logout'),
+    path('newst/<int:news_id>/comment/', add_comment, name='add_comment')
     ]
 
 if settings.DEBUG:

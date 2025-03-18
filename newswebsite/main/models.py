@@ -30,6 +30,7 @@ class Comment(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment', blank=True, null=True)
     comment = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=now)
 
     
     def __str__(self):

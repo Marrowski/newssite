@@ -186,6 +186,7 @@ p {
 }
 
 
+/* Стилі для блоку трендових новин */
 .trending-news {
     width: 25%;
     background: #fff;
@@ -229,6 +230,7 @@ p {
 .trending-news a:hover {
     color: #b30000;
 }
+
 
 .main-content {
     display: flex;
