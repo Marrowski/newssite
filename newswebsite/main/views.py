@@ -239,4 +239,39 @@ def add_comment(request, news_id):
     return redirect('news_template', news_id=news.id)
 
 
+def currency_view(request):
+    token = os.getenv('TOKEN')
+    url = os.getenv('url_mono')
     
+    dollar = None
+    euro = None
+    
+    try:
+        response = requests.get(url)
+        
+        data_json = response.json()
+    
+        if response.status_code == 200:
+            data = data_json
+            dollar = data[0]['rateBuy'], data[0]['rateSell']
+            euro = data[1]['rateBuy'], data[1]['rateSell']
+
+    except requests.exceptions.RequestException as e:
+        return render(request, 'main/currency.html', {'error': f'Помилка запиту: {e}'})
+    except ValueError:
+        return render(request, 'main/currency.html', {'error': 'Помилка обробки JSON-відповіді!'})
+    
+    context = {
+        'dollar_view': dollar,
+        'euro_view': euro,
+    }
+    
+    return render(request, 'main/currency.html', context)
+
+
+def tech_view(request): 
+    pass
+
+
+def culture_view(request):
+    pass

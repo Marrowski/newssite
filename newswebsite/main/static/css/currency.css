@@ -1,0 +1,33 @@
+.currency-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.currency-item {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #ffffff;
+    transition: transform 0.2s;
+}
+
+.currency-item:hover {
+    transform: scale(1.05);
+}
+
+.currency-item h2 {
+    font-size: 24px;
+    color: #343a40;
+}
+
+.currency-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #28a745; 
+}

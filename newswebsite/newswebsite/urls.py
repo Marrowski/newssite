@@ -13,7 +13,10 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('register/', register, name='register'),
     path('logout/', logout_view, name='logout'),
-    path('newst/<int:news_id>/comment/', add_comment, name='add_comment')
+    path('newst/<int:news_id>/comment/', add_comment, name='add_comment'),
+    path('tech/', tech_view, name='tech'),
+    path('currency/', currency_view, name='currency'),
+    path('culture/', culture_view, name='culture')
     ]
 
 if settings.DEBUG:

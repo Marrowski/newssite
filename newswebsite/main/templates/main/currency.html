@@ -1,0 +1,21 @@
+{% extends 'main/index.html' %}
+
+{% load static %}
+{% block title %} Валюта {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/currency.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="currency-container">
+    <div class="currency-item">
+        <h2>Долар (USD)</h2>
+        <p class="currency-value">Купівля/Продаж: ${{ dollar_view }}</p>
+    </div>
+    <div class="currency-item">
+        <h2>Євро (EUR)</h2>
+        <p class="currency-value">Купівля/Продаж: €{{ euro_view }}</p>
+    </div>
+</div>
+{% endblock %}
