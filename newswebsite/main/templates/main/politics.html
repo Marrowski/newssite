@@ -4,7 +4,7 @@
 {% block title %} Політика {% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/politics.css' %}"> 
+<link rel="stylesheet" href="{% static 'css/politics.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,8 +13,10 @@
             {% for n in news %}
                 <a href="{% url 'news_template' n.id %}" class="news-link">
                     <div class="news-item">
-                        {% if n.image %}
-                            <img src="{{ n.image.url }}" alt="{{ n.title }}" class="news-image">
+                        {% if n.photo %}
+                            {% for ph in n.photo.all %}
+                                <img src="{{ ph.image.url }}" alt="{{ n.title }}" class="news-image">
+                            {% endfor %}
                         {% endif %}
                         <h2>{{ n.title }}</h2>
                         <p>{{ n.description }}</p>
@@ -25,4 +27,25 @@
             <p>Наразі новин немає</p>
         {% endif %}
     </div>
+
+    {% if news.has_other_pages %}
+    <div class="pagination-container">
+        <div class="pagination">
+            {% if news.has_previous %}
+                <a href="?page=1">&laquo; Перша</a>
+                <a href="?page={{ news.previous_page_number }}">Попередня</a>
+            {% endif %}
+
+            <span class="current-page">
+                Сторінка {{ news.number }} з {{ news.paginator.num_pages }}
+            </span>
+
+            {% if news.has_next %}
+                <a href="?page={{ news.next_page_number }}">Наступна</a>
+                <a href="?page={{ news.paginator.num_pages }}">Остання &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
 {% endblock %}

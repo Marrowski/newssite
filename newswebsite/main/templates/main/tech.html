@@ -1,0 +1,48 @@
+{% extends "main/index.html" %}
+
+{% load static %}
+{% block title %}Технології{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tech.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="news-container">
+        {% for n in news %}
+            <a href="{% url 'news_template' n.id %}" class="news-link"> 
+                <div class="news-item">
+                    {% if n.photo.all %}
+                        <div class="news-photos">
+                            {% for ph in n.photo.all %}
+                                <img src="{{ ph.image.url }}" alt="News Image" class="news-image">
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <h1 class="news-title">{{ n.title }}</h1>
+                    <p class="news-description">{{ n.description }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    {% if news.has_other_pages %}
+    <div class="pagination-container">
+        <div class="pagination">
+            {% if news.has_previous %}
+                <a href="?page=1">&laquo; Перша</a>
+                <a href="?page={{ news.previous_page_number }}">Попередня</a>
+            {% endif %}
+
+            <span class="current">
+                Сторінка {{ news.number }} з {{ news.paginator.num_pages }}
+            </span>
+
+            {% if news.has_next %}
+                <a href="?page={{ news.next_page_number }}">Наступна</a>
+                <a href="?page={{ news.paginator.num_pages }}">Остання &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

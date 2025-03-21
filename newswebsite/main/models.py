@@ -3,18 +3,9 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 
     
-
-class Category(models.Model):
-    name_category = models.CharField(max_length=40)
-    image = models.ImageField()
-    
-    def __str__(self):
-        return self.name_category
-    
 class News(models.Model):
     title = models.CharField(max_length=50)
-    description = models.CharField(max_length=500, blank=True, null=False)
-    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=None, related_name='category')
+    description = models.TextField(blank=True, null=False)
     
     types_of_news = (('п', "Політика"), ("у", "Україна"), ("н", "Наука"), ("в", "Валюта"), ("к", "Кіно"))
     type_of_category = models.CharField(max_length=10, choices=types_of_news, default=None)
@@ -43,7 +34,7 @@ class UserProfile(models.Model):
 
 class Photo(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='photo')
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, null=True)
 
 
 class TrendingNews(models.Model):

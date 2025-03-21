@@ -1,4 +1,5 @@
 from django.contrib import admin
 from .models import *
 
-admin.site.register([UserProfile, News, Category, Comment, Photo, TrendingNews])
+admin.site.register([UserProfile, News, Comment, Photo, TrendingNews])
+
