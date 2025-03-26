@@ -18,4 +18,22 @@
         <p class="currency-value">Купівля/Продаж: €{{ euro_view }}</p>
     </div>
 </div>
+
+<div class="news-container">
+    {% for n in news %}
+    <a href="{% url 'news_template' n.id %}" class="news-link">
+        <div class="news-item">
+            {% for ph in n.photo.all %}
+            {% if ph %}
+            <img src="{{ ph.image.url }}" alt="{{ n.title }}" class="news-photo">
+            {% endif %}
+            {% endfor %}
+            <p class="news-date">{{ n.date }}</p>
+            <h3>{{ n.title }}</h3>
+            <p>{{ n.description }}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
 {% endblock %}

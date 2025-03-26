@@ -4,7 +4,7 @@ from django.utils.timezone import now
 
     
 class News(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=False)
     
     types_of_news = (('п', "Політика"), ("у", "Україна"), ("н", "Наука"), ("в", "Валюта"), ("к", "Кіно"))
@@ -34,9 +34,14 @@ class UserProfile(models.Model):
 
 class Photo(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='photo')
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, default=None)
 
 
 class TrendingNews(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='trending_news')
+    
+    
+class Advertising(models.Model):
+    image_a = models.ImageField(blank=False, default=None)
+    image_b = models.ImageField(blank=False, default=None)
     

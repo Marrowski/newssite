@@ -1,6 +1,7 @@
 from django.http import HttpRequest
 from django.contrib.auth.models import User
 from .models import *
+from .forms import *
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -16,6 +17,9 @@ load_dotenv()
 
 
 def main_view(request): 
+    
+    adds = Advertising.objects.all()
+    
     news_list = News.objects.prefetch_related('photo').all()
     paginate = Paginator(news_list, 5)
     page = request.GET.get('page')
@@ -66,10 +70,12 @@ def main_view(request):
         'planes': planes,
         'helicopters': helicopters,
         'fuel_tanks': fuel_tanks,
-        'warships': warships
+        'warships': warships, 
+        
     }
     
     return render(request, 'main/index.html', context)
+
 
 
 def news_template(request, news_id):
@@ -77,15 +83,6 @@ def news_template(request, news_id):
     image = Photo.objects.filter(news=news)
     comment = Comment.objects.filter(news=news)
     
-    paginate = Paginator(news, 5)
-    page = request.GET.get('page')
-    
-    try:
-        posts = paginate.page(page)
-    except PageNotAnInteger:
-        posts = paginate.page(1)
-    except EmptyPage:
-        posts = paginate.page(paginate.num_pages)
     
     trending_news = TrendingNews.objects.select_related('news').order_by('-news__date_of_publish')[:5]
     
@@ -117,7 +114,6 @@ def news_template(request, news_id):
 
         'text_comm': comment,
         'trend': trending_news,
-        'posts': posts,
         
         'units': units,
         'tanks': tanks,

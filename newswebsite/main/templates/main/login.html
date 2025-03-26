@@ -7,6 +7,16 @@
 {% block content %}
 <div class="main">
     <h1>Увійти</h1>
+
+    {% if messages %}
+        <div class="alert">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    
     <form action="#" method="POST">
         {% csrf_token %}
         <label for="username">Ім`я користувача:</label>

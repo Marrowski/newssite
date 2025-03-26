@@ -11,14 +11,19 @@
 <body>
     <header>
         <h1>Новини</h1>
-        {% if user.is_authenticated %}
-            <p class="welcome-text">Вітаємо, {{ user.username }}!</p>
-            <a href="{% url 'logout' %}" class="logout-button">Вихід</a>
-        {% else %}
-            <a href="{% url 'login' %}" class="login-button">Вхід</a>
-            <a href="{% url 'register' %}" class="register-button">Реєстрація</a>
-        {% endif %}
+    
+        <div class="header-right">
+            {% if user.is_authenticated %}
+                <p class="welcome-text">Вітаємо, {{ user.username }}!</p>
+                <a href="{% url 'logout' %}" class="logout-button">Вихід</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="login-button">Вхід</a>
+                <a href="{% url 'register' %}" class="register-button">Реєстрація</a>
+            {% endif %}
+        </div>
     </header>
+    
+    
 
     <div class="losses-banner">
         <p>Втрати РФ у війні проти України:</p>

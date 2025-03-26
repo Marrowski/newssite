@@ -11,3 +11,16 @@ class Register(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        
+        
+CITIES = [
+    ("Kyiv", "Київ"),
+    ("Lviv", "Львів"),
+    ("Odesa", "Одеса"),
+    ("Dnipro", "Дніпро"),
+    ("Kharkiv", "Харків"),
+    ('Mykolayv', 'Миколаїв')
+]
+
+class WeatherForm(forms.Form):
+    city = forms.ChoiceField(choices=CITIES, label="Оберіть місто")

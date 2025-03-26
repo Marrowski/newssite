@@ -31,6 +31,47 @@ header h1 {
     padding: 10px 0; 
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 5px;
+    height: 5px;
+}
+
+.current-date {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.weather-widget {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.weather-widget p {
+    margin: 0;
+    font-size: 1em;
+}
+
+.weather-widget img {
+    width: 30px;
+    vertical-align: middle;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
 .navbar {
     background: #444;
     color: #fff;
